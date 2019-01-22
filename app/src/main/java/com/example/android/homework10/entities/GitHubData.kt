@@ -3,7 +3,7 @@ package com.example.android.homework10.entities
 import com.google.gson.annotations.SerializedName
 
 data class GitHubData(
-    @SerializedName("login") val userName: String,
+    @SerializedName("onLoginClicked") val userName: String,
     @SerializedName("id") val userId: Int,
     @SerializedName("avatar_url") val userImageSource: String,
     @SerializedName("html_url") val userProfileUrl: String,

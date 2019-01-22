@@ -1,19 +1,23 @@
 package com.example.android.homework10.adapters
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.example.android.homework10.R
-import com.example.android.homework10.entities.GitHubData
+import com.example.android.homework10.userList
 
-class ReposAdapter(val repList : List<GitHubData>) : RecyclerView.Adapter<ReposAdapter.ReposViewHolder>() {
+class ReposAdapter(private val callback: Callback) : androidx.recyclerview.widget.RecyclerView.Adapter<ReposAdapter.ReposViewHolder>() {
 
-    private val reposList: MutableList<GitHubData> = repList.toMutableList()
+    private val reposList = userList.toMutableList()
+
+    interface Callback {
+        fun onUserClicked(position: Int)
+    }
+
 
     override fun onBindViewHolder(holder: ReposViewHolder, position: Int) {
-        holder.onBind(reposList[position].userName)
+        holder.onBind(reposList[position])
     }
 
     override fun getItemCount(): Int {
@@ -30,7 +34,14 @@ class ReposAdapter(val repList : List<GitHubData>) : RecyclerView.Adapter<ReposA
         )
     }
 
-    inner class ReposViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ReposViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view), View.OnClickListener {
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            callback.onUserClicked(adapterPosition)
+        }
 
         private val itemText: TextView = view.findViewById(R.id.item_text)
 
